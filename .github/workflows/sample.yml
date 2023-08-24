@@ -22,5 +22,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.ECR_REGISTRY }}/my-python-app .
-          docker push ${{ secrets.ECR_REGISTRY }}/my-python-app
+          docker build -t ${{ secrets.ECR_REGISTRY }}/my-app .
+          docker push ${{ secrets.ECR_REGISTRY }}/my-app
