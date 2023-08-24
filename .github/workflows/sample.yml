@@ -1,0 +1,27 @@
+name: Build and Push Docker Image to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          echo ${{ secrets.AWS_ACCESS_KEY_ID }} | aws configure --profile user --access-key-id
+          echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} | aws configure --profile user --secret-access-key
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ secrets.
+           }}/my-python-app .
+          docker push ${{ secrets.ECR_REGISTRY }}/my-python-app
